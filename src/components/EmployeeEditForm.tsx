@@ -1,31 +1,28 @@
 import { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
-import { useAddEmployeeMutation } from '../features/employees/employeeApi';
+import { useUpdateEmployeeMutation } from '../features/employees/employeeApi';
 import { Employee } from '../features/employees/types';
-import styles from './EmployeeForm.module.css';
+import styles from './EmployeeEditForm.module.css';
 
-function EmployeeForm() {
-  const [name, setName] = useState('');
-  const [jobTitle, setJobTitle] = useState('');
-  const [hireDate, setHireDate] = useState('');
-  const navigate = useNavigate();
+interface Props {
+  employee: Employee;
+}
 
-  const [addEmployee, { isLoading }] = useAddEmployeeMutation();
+function EmployeeEditForm({ employee }: Props) {
+  const [name, setName] = useState(employee.name || '');
+  const [jobTitle, setJobTitle] = useState(employee.jobTitle || '');
+  const [hireDate, setHireDate] = useState(employee.hireDate || '');
+
+  const [updateEmployee, { isLoading }] = useUpdateEmployeeMutation();
 
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
-    const employee: Partial<Employee> = { name, jobTitle, hireDate };
-    addEmployee(employee).then(() => {
-      setName('');
-      setJobTitle('');
-      setHireDate('');
-    });
-    navigate('/')
+    const updatedEmployee: Employee = { ...employee, name, jobTitle, hireDate };
+    updateEmployee(updatedEmployee);
   };
 
   return (
     <div className={styles.container}>
-      <h2>Add Employee</h2>
+      <h2>Edit Employee</h2>
       <form onSubmit={handleSubmit} className={styles.form}>
         <label className={styles.label}>
           Name:
@@ -58,11 +55,11 @@ function EmployeeForm() {
           />
         </label>
         <button type="submit" disabled={isLoading} className={styles.button}>
-          Add
+          Save
         </button>
       </form>
     </div>
   );
 }
 
-export default EmployeeForm;
+export default EmployeeEditForm;

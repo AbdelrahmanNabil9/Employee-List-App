@@ -1,0 +1,38 @@
+.container {
+    max-width: 600px;
+    margin: 0 auto;
+  }
+  
+  .title {
+    font-size: 36px;
+    margin-bottom: 16px;
+    color: #333;
+  }
+  
+  .list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    background-color: #f9f9f9;
+    padding: 16px;
+  }
+  
+  .list-item {
+    margin-bottom: 8px;
+    font-size: 18px;
+    color: #666;
+  }
+  
+  .label {
+    margin-right: 8px;
+    font-size: 18px;
+    color: #333;
+    font-weight: bold;
+  }
+  
+  .value {
+    font-size: 18px;
+    color: #666;
+  }

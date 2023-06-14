@@ -1,17 +1,33 @@
-import { Route, Routes } from 'react-router-dom';
-import EmployeeListPage from './pages/EmployeeListPage';
-import EmployeeFormPage from './pages/EmployeeFormPage';
+import { Routes, Route } from 'react-router-dom';
+import NavBar from './components/NavBar';
+import EmployeeList from './components/EmployeeList';
+import EmployeeForm from './components/EmployeeForm';
+import EmployeeEditForm from './components/EmployeeEditForm';
+import EmployeeDetail from './components/EmployeeDetail';
+import { Employee } from './features/employees/types';
 
-function App() {
+export function App() {
   return (
-    <div>
-      <Routes>
-        <Route  path="/employees" element={EmployeeListPage} />
-        <Route  path="/employees/add" element={EmployeeFormPage} />
-        <Route  path="/employees/:id" element={EmployeeFormPage} />
-      </Routes>
-    </div>
+      <div>
+        
+        <NavBar/>
+        <Routes>
+          <Route path="/add" element={<EmployeeForm />} />
+          <Route
+            path="/edit/:id"
+            element={
+              <RouteEditWrapper>
+                <EmployeeEditForm employee={{} as Employee}  />
+              </RouteEditWrapper>
+            }
+          />
+          <Route path="/detail/:id" element={<EmployeeDetail />} />
+          <Route path="/" element={<EmployeeList />} />
+        </Routes>
+      </div>
   );
 }
 
-export default App;
+function RouteEditWrapper({ children }: { children: React.ReactNode }) {
+  return <div>{children}</div>;
+}
