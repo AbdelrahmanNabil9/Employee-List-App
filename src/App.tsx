@@ -9,7 +9,6 @@ import { Employee } from './features/employees/types';
 export function App() {
   return (
       <div>
-        
         <NavBar/>
         <Routes>
           <Route path="/add" element={<EmployeeForm />} />

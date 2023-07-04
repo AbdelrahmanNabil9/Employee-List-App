@@ -3,7 +3,7 @@ import { Employee } from './types';
 
 export const employeeApi = createApi({
   reducerPath: 'employeeApi',
-  baseQuery: fetchBaseQuery({ baseUrl: 'http://localhost:3001' }),
+  baseQuery: fetchBaseQuery({ baseUrl: 'http://localhost:3000' }),
   endpoints: (builder) => ({
     getEmployees: builder.query<Employee[], void>({
       query: () => '/employees',

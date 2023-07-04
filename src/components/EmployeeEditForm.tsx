@@ -1,24 +1,36 @@
 import { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { useUpdateEmployeeMutation } from '../features/employees/employeeApi';
 import { Employee } from '../features/employees/types';
 import styles from './EmployeeEditForm.module.css';
+import { useParams } from 'react-router-dom';
+
 
 interface Props {
   employee: Employee;
 }
-
 function EmployeeEditForm({ employee }: Props) {
+  const navigate = useNavigate();
+  const { id } = useParams<{ id: string }>();
   const [name, setName] = useState(employee.name || '');
   const [jobTitle, setJobTitle] = useState(employee.jobTitle || '');
   const [hireDate, setHireDate] = useState(employee.hireDate || '');
 
   const [updateEmployee, { isLoading }] = useUpdateEmployeeMutation();
 
-  const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
+  const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
-    const updatedEmployee: Employee = { ...employee, name, jobTitle, hireDate };
-    updateEmployee(updatedEmployee);
+    const updatedEmployee: Employee = {
+      id: (id) ?? '', 
+      name: name ?? '', 
+      jobTitle: jobTitle ?? '', 
+      hireDate: hireDate 
+    };    
+    await updateEmployee(updatedEmployee);
+    console.log(updatedEmployee);
+     await navigate('/');
   };
+  
 
   return (
     <div className={styles.container}>
